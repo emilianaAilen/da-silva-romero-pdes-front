@@ -5,12 +5,13 @@ import { Container, Form } from "./register.styles";
 import { AuthForm } from "../../types";
 import { Link } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
+import { registerUser } from "../../services/user";
 import { useAuthForm } from "../../hooks/useAuthForm";
 
 export const Register = () => {
   const { register, handleSubmit, errors, disabled } = useAuthForm();
 
-  const onSubmit: SubmitHandler<AuthForm> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<AuthForm> = (data) => registerUser(data);
 
   return (
     <Container>
