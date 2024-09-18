@@ -1,5 +1,8 @@
-export interface CreateUserData {
-  name: string;
+export interface UserBasicData {
   email: string;
   password: string;
+}
+
+export interface CreateUserData extends UserBasicData {
+  name: string;
 }
