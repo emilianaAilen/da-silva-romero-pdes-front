@@ -6,7 +6,10 @@
 ## Para correr la App
 - `npm install`
 - `npm start`
-### Podes usar yarn si preferis
+Podes usar yarn si preferis
+
+### Docker
+`docker-compose up`
 
 Abrir [http://localhost:3000](http://localhost:3000) para ver en el navegador.
 
