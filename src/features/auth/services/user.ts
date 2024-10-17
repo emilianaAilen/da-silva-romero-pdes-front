@@ -3,15 +3,16 @@ import { CreateUserData, UserBasicData } from "./types";
 
 
 const basicHeaders = {
-    'Content-Type': 'application/json',
+  'Content-Type': 'application/json',
 }
 
 export const registerUser = async (userData: CreateUserData) => {
   try {
+    const { password, name, email } = userData
     const response = await fetch(API.createUser, {
       method: 'POST',
       headers: basicHeaders,
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ password, username: name, email, roleType: 'user' }),
     });
 
     if (!response.ok) {
@@ -26,10 +27,10 @@ export const registerUser = async (userData: CreateUserData) => {
   }
 };
 
-export const loginUser = async (userLogin: UserBasicData) =>{
- // Agregar AUTH login con auth2 o login mediante email de google
+export const loginUser = async (userLogin: UserBasicData) => {
+  // Agregar AUTH login con auth2 o login mediante email de google
   try {
-    const response = await fetch(API.loginUser,{
+    const response = await fetch(API.loginUser, {
       method: 'POST',
       headers: basicHeaders,
       body: JSON.stringify(userLogin),
@@ -41,7 +42,7 @@ export const loginUser = async (userLogin: UserBasicData) =>{
     console.log('User Logged successfully');
     return data;
   }
-  catch(error){
+  catch (error) {
     console.log('Login failed')
   }
 }
