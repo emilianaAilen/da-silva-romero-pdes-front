@@ -28,7 +28,6 @@ export const registerUser = async (userData: CreateUserData) => {
 };
 
 export const loginUser = async (userLogin: UserBasicData) => {
-  // Agregar AUTH login con auth2 o login mediante email de google
   try {
     const response = await fetch(API.loginUser, {
       method: 'POST',

@@ -1,16 +1,16 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { EMAIL, PASSWORD } from "../../constants";
 import { Container, Form } from "./login.styles";
-import { AuthForm } from "../../types";
+import { LoginForm } from "../../types";
 import { Link } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
 import { loginUser } from "../../services/user";
-import { useAuthForm } from "../../hooks/useAuthForm";
+import { useLoginForm } from "../../hooks/useLoginForm";
 
 export const Login = () => {
-  const { register, handleSubmit, errors, disabled } = useAuthForm();
+  const { register, handleSubmit, errors, disabled } = useLoginForm();
 
-  const onSubmit: SubmitHandler<AuthForm> = (data) => loginUser(data);
+  const onSubmit: SubmitHandler<LoginForm> = (data) => loginUser(data);
 
   return (
     <Container>
