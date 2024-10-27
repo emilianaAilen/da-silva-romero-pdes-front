@@ -1,6 +1,8 @@
-import { API } from "../../../api";
 import { CreateUserData, UserBasicData } from "./types";
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
+import { API } from "../../../api";
+import { showSnackbar } from "../../common/slices/snackbarSlice";
 
 const basicHeaders = {
   'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ export const registerUser = async (userData: CreateUserData) => {
   }
 };
 
-export const loginUser = async (userLogin: UserBasicData) => {
+export const loginUser = async (userLogin: UserBasicData, dispatch: Dispatch<UnknownAction>) => {
   try {
     const response = await fetch(API.loginUser, {
       method: 'POST',
@@ -38,10 +40,10 @@ export const loginUser = async (userLogin: UserBasicData) => {
       throw new Error(`Error: ${response.statusText}`);
     }
     const data = await response.json();
-    console.log('User Logged successfully');
+    dispatch(showSnackbar({ type: 'success', message: 'User Logged successfully' }));
     return data;
   }
-  catch (error) {
-    console.log('Login failed')
+  catch (error: any) {
+    dispatch(showSnackbar({ type: 'error', message: error?.message }));
   }
 }

@@ -1,16 +1,17 @@
 import { Button, TextField, Typography } from "@mui/material";
-import { EMAIL, PASSWORD } from "../../constants";
 import { Container, Form } from "./login.styles";
-import { LoginForm } from "../../types";
+import { EMAIL, PASSWORD } from "../../constants";
+
 import { Link } from "react-router-dom";
+import { LoginForm } from "../../types";
 import { SubmitHandler } from "react-hook-form";
-import { loginUser } from "../../services/user";
 import { useLoginForm } from "../../hooks/useLoginForm";
 
-export const Login = () => {
+interface LoginProps {
+  onSubmit: SubmitHandler<LoginForm>;
+}
+export const Login = ({ onSubmit }: LoginProps) => {
   const { register, handleSubmit, errors, disabled } = useLoginForm();
-
-  const onSubmit: SubmitHandler<LoginForm> = (data) => loginUser(data);
 
   return (
     <Container>
@@ -44,7 +45,8 @@ export const Login = () => {
         </Button>
       </Form>
       <p>
-        ¿No tienes cuenta? <Link to="/register">Regístrate</Link> para crear una.
+        ¿No tienes cuenta? <Link to="/register">Regístrate</Link> para crear
+        una.
       </p>
     </Container>
   );
