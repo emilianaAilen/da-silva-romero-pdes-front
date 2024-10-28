@@ -35,6 +35,7 @@ export const loginUser = async (userLogin: UserBasicData, dispatch: Dispatch<Unk
       method: 'POST',
       headers: basicHeaders,
       body: JSON.stringify(userLogin),
+      credentials: 'include'
     })
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);

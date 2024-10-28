@@ -8,15 +8,15 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const [cookies] = useCookies(["token"]);
+  const [cookies] = useCookies(["authToken"]);
   const navigate = useNavigate();
   const dispath = useDispatch();
 
   useEffect(() => {
-    if (cookies.token) {
-      navigate("/home");
+    if (cookies.authToken) {
+      navigate("/home"); 
     }
-  }, [cookies.token, navigate]);
+  }, [cookies.authToken, navigate]);
 
   const onSubmit: SubmitHandler<LoginForm> = (data) => loginUser(data, dispath);
 

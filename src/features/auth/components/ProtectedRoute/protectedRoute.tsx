@@ -6,8 +6,8 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const [cookies] = useCookies(["token"]);
-  const isAuthenticated = !!cookies.token;
+  const [cookies] = useCookies(["authToken"]);
+  const isAuthenticated = !!cookies.authToken;
 
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
