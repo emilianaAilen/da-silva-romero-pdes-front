@@ -26,7 +26,7 @@ export const SearchBoxWrapper = ({ children }: SearchBoxWrapperProps) => {
   };
 
   const handleSearch = () => {
-    navigate(`/?search=${query}`);
+    navigate(`/home?search=${encodeURIComponent(query)}`);
   };
 
   const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
