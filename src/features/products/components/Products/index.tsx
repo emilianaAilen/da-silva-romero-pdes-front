@@ -19,6 +19,7 @@ const fetcher = async (url: string) => {
 
 export const Products = () => {
   const { query } = useSearch();
+  console.log(query);
   const { data, error, isLoading } = useSWR(query ? API.getProducts(query) : null, fetcher, {
     revalidateOnFocus: false,
     shouldRetryOnError: false

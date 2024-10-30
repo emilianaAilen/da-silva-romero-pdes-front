@@ -12,6 +12,8 @@ export const SearchBoxWrapper = ({ children }: SearchBoxWrapperProps) => {
   const [query, setQuery] = useState('');
   const navigate = useNavigate();
 
+  console.log(query);
+
   useEffect(() => {
     if (queryParam && queryParam !== query) {
       setQuery(queryParam);
