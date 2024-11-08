@@ -5,7 +5,7 @@ import { Container, Form } from "./register.styles";
 import { AuthForm } from "../../types";
 import { Link } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
-import { registerUser } from "../../services/user";
+import { registerUser } from "../../services/auth";
 import { useAuthForm } from "../../hooks/useAuthForm";
 
 export const Register = () => {
@@ -63,8 +63,8 @@ export const Register = () => {
         </Button>
       </Form>
       <p>
-        ¿Ya estás registrado/a? <Link to="/login">Inicia sesión</Link> para acceder a
-        tu perfil.
+        ¿Ya estás registrado/a? <Link to="/login">Inicia sesión</Link> para
+        acceder a tu perfil.
       </p>
     </Container>
   );
