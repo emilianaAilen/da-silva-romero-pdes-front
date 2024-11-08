@@ -8,22 +8,41 @@ import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
 import { Provider } from "react-redux";
 import { Register } from "./features/auth/components/Register";
 import { store } from "./store";
+import { GlobalLayout } from "./layouts/components/GlobalLayout";
 
 const App = () => (
   <Provider store={store}>
-    <Routes>
-      <Route path="/" element={<HomeWrapper />} />
-      <Route
-        path="/home"
-        element={
-          <ProtectedRoute>
-            <Products />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+    <GlobalLayout>
+      <Routes>
+        <Route path="/" element={<HomeWrapper />} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/purchases"
+          element={
+            <ProtectedRoute>
+              <>Compras</>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            <ProtectedRoute>
+              <>Favoritos</>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </GlobalLayout>
     <GlobalSnackbar />
   </Provider>
 );
