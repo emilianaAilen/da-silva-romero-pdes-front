@@ -10,11 +10,10 @@ const basicHeaders = {
 
 export const registerUser = async (userData: CreateUserData) => {
   try {
-    const { password, name, email } = userData
     const response = await fetch(API.createUser, {
       method: 'POST',
       headers: basicHeaders,
-      body: JSON.stringify({ password, username: name, email, roleType: 'user' }),
+      body: JSON.stringify(userData),
     });
 
     if (!response.ok) {
