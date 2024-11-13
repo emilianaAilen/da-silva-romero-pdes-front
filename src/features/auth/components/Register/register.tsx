@@ -9,16 +9,18 @@ import { registerUser } from "../../services/auth";
 import { useAuthForm } from "../../hooks/useAuthForm";
 import { useState } from "react";
 import { UserRole } from "../../services/types";
+import { useDispatch } from "react-redux";
 
 export const Register = () => {
   const [role, setRole] = useState(UserRole.user);
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors, disabled } = useAuthForm();
 
   const handleChangeRole = (event: SelectChangeEvent) => {
     setRole(event.target.value as UserRole);
   };
 
-  const onSubmit: SubmitHandler<AuthForm> = (data) => registerUser({ ...data, roleType: role });
+  const onSubmit: SubmitHandler<AuthForm> = (data) => registerUser({ ...data, roleType: role }, dispatch);
 
   return (
     <Container>
@@ -75,6 +77,7 @@ export const Register = () => {
         </FormControl>
         <Button
           disabled={disabled}
+          type="submit"
           onClick={handleSubmit(onSubmit)}
           sx={{ padding: 1, textTransform: "none", fontSize: 16 }}
           variant="contained"
