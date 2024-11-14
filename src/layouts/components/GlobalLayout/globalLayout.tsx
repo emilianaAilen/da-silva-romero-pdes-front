@@ -7,6 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { AppProvider, Authentication, Navigation, Session } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import logoMl from '../../../assets/Logo_ML.png';
+import { UserRole } from "../../../features/auth/services/types";
 
 const USER_NAVIGATION: Navigation = [
   {
@@ -96,7 +97,7 @@ export const GlobalLayout = ({ children, session, authentication, role }: Global
     branding={{ title: 'Asesor Personal de Compras', logo: <img style={{ maxHeight: '30px' }} src={logoMl} alt="logo" /> }}
     session={session}
     authentication={authentication}
-    navigation={role === 'user' ? USER_NAVIGATION : ADMIN_NAVIGATION}
+    navigation={role === UserRole.user ? USER_NAVIGATION : ADMIN_NAVIGATION}
   >
     <DashboardLayout>
       {children}
