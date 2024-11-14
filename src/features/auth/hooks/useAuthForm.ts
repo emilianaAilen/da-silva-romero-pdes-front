@@ -8,7 +8,7 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('El email no es válido')
     .required('El email es obligatorio'),
-  name: Yup.string()
+  username: Yup.string()
     .required('El nombre es obligatorio')
     .min(3, 'El nombre debe tener al menos 3 caracteres'),
   password: Yup.string()
@@ -31,7 +31,7 @@ export const useAuthForm = () => {
     resolver: yupResolver(schema),
     defaultValues: {
       email: '',
-      name: ''
+      username: ''
     },
     mode: 'onChange',
   });

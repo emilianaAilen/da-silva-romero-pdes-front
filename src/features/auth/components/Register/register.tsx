@@ -1,5 +1,5 @@
-import { Button, TextField, Typography } from "@mui/material";
-import { CONFIRM_PASSWORD, EMAIL, NAME, PASSWORD } from "../../constants";
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { CONFIRM_PASSWORD, EMAIL, PASSWORD, USERNAME } from "../../constants";
 import { Container, Form } from "./register.styles";
 
 import { AuthForm } from "../../types";
@@ -7,11 +7,20 @@ import { Link } from "react-router-dom";
 import { SubmitHandler } from "react-hook-form";
 import { registerUser } from "../../services/auth";
 import { useAuthForm } from "../../hooks/useAuthForm";
+import { useState } from "react";
+import { UserRole } from "../../services/types";
+import { useDispatch } from "react-redux";
 
 export const Register = () => {
+  const [role, setRole] = useState(UserRole.user);
+  const dispatch = useDispatch();
   const { register, handleSubmit, errors, disabled } = useAuthForm();
 
-  const onSubmit: SubmitHandler<AuthForm> = (data) => registerUser(data);
+  const handleChangeRole = (event: SelectChangeEvent) => {
+    setRole(event.target.value as UserRole);
+  };
+
+  const onSubmit: SubmitHandler<AuthForm> = (data) => registerUser({ ...data, roleType: role }, dispatch);
 
   return (
     <Container>
@@ -27,13 +36,13 @@ export const Register = () => {
           {...register(EMAIL)}
         />
         <TextField
-          error={!!errors[NAME]}
-          helperText={errors[NAME]?.message || ""}
+          error={!!errors[USERNAME]}
+          helperText={errors[USERNAME]?.message || ""}
           type="text"
           fullWidth
           label="Nombre"
           variant="outlined"
-          {...register(NAME)}
+          {...register(USERNAME)}
         />
         <TextField
           error={!!errors[PASSWORD]}
@@ -53,8 +62,22 @@ export const Register = () => {
           variant="outlined"
           {...register(CONFIRM_PASSWORD)}
         />
+        <FormControl>
+          <InputLabel id="role-label">Rol</InputLabel>
+          <Select
+            labelId="role-label"
+            fullWidth
+            value={role}
+            label="Rol"
+            onChange={handleChangeRole}
+          >
+            <MenuItem value={UserRole.user}>User</MenuItem>
+            <MenuItem value={UserRole.admin}>Admin</MenuItem>
+          </Select>
+        </FormControl>
         <Button
           disabled={disabled}
+          type="submit"
           onClick={handleSubmit(onSubmit)}
           sx={{ padding: 1, textTransform: "none", fontSize: 16 }}
           variant="contained"

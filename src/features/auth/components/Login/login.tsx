@@ -40,6 +40,7 @@ export const Login = ({ onSubmit }: LoginProps) => {
           onClick={handleSubmit(onSubmit)}
           sx={{ padding: 1, textTransform: "none", fontSize: 16 }}
           variant="contained"
+          type="submit"
         >
           Iniciar sesión
         </Button>
