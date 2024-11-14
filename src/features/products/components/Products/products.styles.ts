@@ -1,18 +1,17 @@
 import { Box, styled } from "@mui/material";
 
 export const Container = styled(Box)(() => ({
+  padding: '16px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '30px',
   alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-  height: '100vh',
+  width: '100%'
 }));
 
-export const Form = styled('form')(() => ({
-  width: '40%', 
+export const ProductsContainer = styled(Box)(() => ({
+  marginTop: '30px',
   display: 'flex',
   flexDirection: 'column',
-  gap: '20px',
+  alignItems: 'center',
+  width: '60%',
 }));
