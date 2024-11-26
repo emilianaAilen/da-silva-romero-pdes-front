@@ -20,7 +20,7 @@ export const Register = () => {
     setRole(event.target.value as UserRole);
   };
 
-  const onSubmit: SubmitHandler<AuthForm> = (data) => registerUser({ ...data, roleType: role }, dispatch);
+  const onSubmit: SubmitHandler<AuthForm> = ({ email, username, password }) => registerUser({ email, username, password, roleType: role }, dispatch);
 
   return (
     <Container>
