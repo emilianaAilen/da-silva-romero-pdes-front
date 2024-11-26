@@ -27,9 +27,9 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
 
   const session: Session = {
     user: {
-      name: data?.name,
+      name: data?.username,
       email: data?.email,
-      image: `https://ui-avatars.com/api/?name=${data?.name}`,
+      image: `https://ui-avatars.com/api/?name=${data?.username}`,
     }
   }
 
@@ -54,5 +54,5 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
 
   if (!cookies.authToken) return <>{children}</>;
 
-  return <GlobalLayoutUI session={session} authentication={authentication} role={data?.role}>{children}</GlobalLayoutUI>
+  return <GlobalLayoutUI session={session} authentication={authentication} role={data?.roleType}>{children}</GlobalLayoutUI>
 }
