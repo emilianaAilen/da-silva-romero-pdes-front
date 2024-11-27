@@ -30,6 +30,7 @@ export const AddProduct = ({ open, productData, handleClose }: AddProductProps) 
         puntage: 0
       } as any);
       dispatch(showSnackbar({ type: 'success', message: 'Compra realizada' }));
+      handleClose();
     } catch (error) {
       dispatch(showSnackbar({ type: 'error', message: 'No se pudo realizar la compra' }));
     }
