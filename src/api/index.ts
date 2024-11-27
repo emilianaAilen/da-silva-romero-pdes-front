@@ -4,5 +4,6 @@ export const API = {
   createUser: `${baseUrl}/user/create`,
   loginUser: `${baseUrl}/auth/login`,
   session: `${baseUrl}/auth/session`,
-  getProducts: (query: string) => `${baseUrl}/products/search?query=${query}`
+  getProducts: (query: string) => `${baseUrl}/products/search?query=${query}`,
+  addToFavorites: (productId: string) => `${baseUrl}/products/favorite/${productId}`
 }
