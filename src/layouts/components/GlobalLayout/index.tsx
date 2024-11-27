@@ -16,7 +16,8 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
 
   const { data, isLoading } = useSWR(API.session, fetcher, {
     revalidateOnFocus: false,
-    shouldRetryOnError: false
+    shouldRetryOnError: false,
+    revalidateIfStale: false,
   });
 
   useEffect(() => {
@@ -24,6 +25,12 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
       mutate(API.session);
     }
   }, [cookies.authToken]);
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('id', data.id);
+    }
+  }, [data]);
 
   const session: Session = {
     user: {
