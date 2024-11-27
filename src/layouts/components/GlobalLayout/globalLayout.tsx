@@ -3,7 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-import FavoriteIcon from '@mui/icons-material/Favorite'
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { AppProvider, Authentication, Navigation, Session } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import logoMl from '../../../assets/Logo_ML.png';
