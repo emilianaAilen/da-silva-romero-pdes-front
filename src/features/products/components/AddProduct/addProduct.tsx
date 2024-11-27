@@ -21,16 +21,18 @@ export const AddProduct = ({ open, cant, loading, setCant, handleClose, handleBu
         slotProps={{ htmlInput: { min: 1 } }}
         onChange={(e) => {
           const value = parseInt(e.target.value, 10);
-          if (isNaN(value)) {
-            setCant(0);
-          } else {
-            setCant(value);
-          }
+          setCant(value);
         }}
       />
       <ButtonsContainer>
         <Button onClick={handleClose}>Cancelar</Button>
-        <Button variant="outlined" disabled={loading} onClick={handleBuy}>Comprar</Button>
+        <Button variant="outlined" disabled={loading}
+          onClick={(event) => {
+            event.preventDefault();
+            handleBuy();
+          }}>
+          Comprar
+        </Button>
       </ButtonsContainer>
     </Content>
   </Dialog>
