@@ -24,5 +24,9 @@ export const Product = ({ productData }: ProductProps) => {
     }
   };
 
-  return <ProductUI productData={productData} favoritePostLoading={isMutating} handleAddToFavorite={handleAddToFavorite} />
+  return <ProductUI
+    productData={productData}
+    favoritePostLoading={isMutating}
+    handleAddToFavorite={handleAddToFavorite}
+  />
 }
