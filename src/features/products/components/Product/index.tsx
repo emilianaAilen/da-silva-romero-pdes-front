@@ -1,10 +1,10 @@
-import { ProductData } from '../../../products/types';
-import { Product as ProductUI } from './product';
-import { poster } from '../../utils';
+import { ProductData } from '../../types';
+import { poster } from '../../../common/utils';
 import { API } from '../../../../api';
 import useSWRMutation from 'swr/mutation'
-import { showSnackbar } from '../../slices/snackbarSlice';
+import { showSnackbar } from '../../../common/slices/snackbarSlice';
 import { useDispatch } from 'react-redux';
+import { ProductCard } from '../../../common/components/ProductCard';
 
 interface ProductProps {
   productData: ProductData;
@@ -24,9 +24,10 @@ export const Product = ({ productData }: ProductProps) => {
     }
   };
 
-  return <ProductUI
+  return <ProductCard
     productData={productData}
     favoritePostLoading={isMutating}
+    showActions
     handleAddToFavorite={handleAddToFavorite}
   />
 }

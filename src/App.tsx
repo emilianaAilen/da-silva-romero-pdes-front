@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { Register } from "./features/auth/components/Register";
 import { store } from "./store";
 import { GlobalLayout } from "./layouts/components/GlobalLayout";
+import { Favorites } from "./features/favorites/components/Favorites";
 
 const App = () => (
   <Provider store={store}>
@@ -35,7 +36,7 @@ const App = () => (
           path="/favorites"
           element={
             <ProtectedRoute>
-              <>Favoritos</>
+              <Favorites/>
             </ProtectedRoute>
           }
         />
