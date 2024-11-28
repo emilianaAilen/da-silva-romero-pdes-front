@@ -2,17 +2,17 @@ import { isEmpty } from "lodash";
 import { ItemsWrapper } from "../../../common/components/ItemsWrapper";
 import { ProductCard } from "../../../common/components/ProductCard";
 import { Container } from "./favorites.styles";
-import { Favorite } from "../../types";
 import { ProductData } from "../../../products/types";
+import { ProductSummary } from "../../../common/types";
 
 interface FavoritesProps {
-  favoritesProducts: Favorite[];
+  favoritesProducts: ProductSummary[];
   loading: boolean;
   hasError: boolean;
 }
 
 export const Favorites = ({ favoritesProducts, loading, hasError }: FavoritesProps) => {
-  const parseToProductData = ({ id, name, price, url_image }: Favorite): ProductData => (
+  const parseToProductData = ({ id, name, price, url_image }: ProductSummary): ProductData => (
     {
       id,
       tittle: name,
