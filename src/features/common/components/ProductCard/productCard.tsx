@@ -3,17 +3,18 @@ import { ProductData } from "../../../products/types";
 import { ActionsContainer, Container, InfoContainer, Picture, Price, PriceContainer, Title } from "./productCard.styles";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { AddProduct } from "../../../products/components/AddProduct";
 
 interface ProductCardProps {
   productData: ProductData;
   favoritePostLoading?: boolean;
   showActions?: boolean;
+  summary?: ReactNode;
   handleAddToFavorite?: () => void;
 }
 
-export const ProductCard = ({ productData, favoritePostLoading, showActions = false, handleAddToFavorite }: ProductCardProps) => {
+export const ProductCard = ({ productData, favoritePostLoading, showActions = false, summary, handleAddToFavorite }: ProductCardProps) => {
   const [open, setOpen] = useState(false);
   const { imageLink, tittle, price } = productData;
 
@@ -35,6 +36,7 @@ export const ProductCard = ({ productData, favoritePostLoading, showActions = fa
               Comprar
             </Button>
           </ActionsContainer>}
+          {summary && summary}
         </PriceContainer>
         <Title>{tittle}</Title>
       </InfoContainer>

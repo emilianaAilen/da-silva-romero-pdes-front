@@ -5,6 +5,7 @@ export const API = {
   loginUser: `${baseUrl}/auth/login`,
   session: `${baseUrl}/auth/session`,
   getFavorites: `${baseUrl}/products/favorites`,
+  getPurchases: (userId: string) => `${baseUrl}/purchase/${userId}`,
   getProducts: (query: string) => `${baseUrl}/products/search?query=${query}`,
   addToFavorites: (productId: string) => `${baseUrl}/products/favorite/${productId}`,
   buyProduct: (productId: string) => `${baseUrl}/purchase/${productId}`
