@@ -11,7 +11,7 @@ export const fetcher = async (url: string) => {
   }
 };
 
-export const poster = async (url: string, { arg }: { arg: any}) => {
+export const poster = async (url: string, payload?: { arg: any }) => {
   try {
     const res = await fetch(url, {
       method: 'POST',
@@ -19,7 +19,7 @@ export const poster = async (url: string, { arg }: { arg: any}) => {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-      body: JSON.stringify(arg),
+      body: payload ? JSON.stringify(payload.arg) : undefined,
     });
 
     if (!res.ok) {

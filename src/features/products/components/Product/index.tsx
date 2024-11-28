@@ -16,8 +16,7 @@ export const Product = ({ productData }: ProductProps) => {
 
   const handleAddToFavorite = async () => {
     try {
-      const userId = localStorage.getItem('id');
-      await trigger({ userId, productExternalId: productData.id } as any);
+      await trigger();
       dispatch(showSnackbar({ type: 'success', message: 'Producto agregado a favoritos' }));
     } catch (error) {
       dispatch(showSnackbar({ type: 'error', message: 'No se pudo agregar a favoritos' }));
