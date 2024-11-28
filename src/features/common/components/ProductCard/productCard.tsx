@@ -36,7 +36,7 @@ export const ProductCard = ({ productData, favoritePostLoading, showActions = fa
               Comprar
             </Button>
           </ActionsContainer>}
-          {summary && summary}
+          {summary ? summary : null}
         </PriceContainer>
         <Title>{tittle}</Title>
       </InfoContainer>
