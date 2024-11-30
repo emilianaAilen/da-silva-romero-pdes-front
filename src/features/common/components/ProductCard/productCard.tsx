@@ -3,24 +3,30 @@ import { ProductData } from "../../../products/types";
 import { ActionsContainer, Container, InfoContainer, Picture, Price, PriceContainer, Title } from "./productCard.styles";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { AddProduct } from "../../../products/components/AddProduct";
+import ReviewsIcon from '@mui/icons-material/Reviews';
+import { useDialog } from "../../hooks/useDialog";
 
 interface ProductCardProps {
   productData: ProductData;
   favoritePostLoading?: boolean;
   showActions?: boolean;
   summary?: ReactNode;
+  showComments?: () => void;
   handleAddToFavorite?: () => void;
 }
 
-export const ProductCard = ({ productData, favoritePostLoading, showActions = false, summary, handleAddToFavorite }: ProductCardProps) => {
-  const [open, setOpen] = useState(false);
+export const ProductCard = ({
+  productData,
+  favoritePostLoading,
+  showActions = false,
+  summary,
+  handleAddToFavorite,
+  showComments
+}: ProductCardProps) => {
+  const { open, handleClose, handleOpen } = useDialog();
   const { imageLink, tittle, price } = productData;
-
-  const handleOpen = () => setOpen(true);
-
-  const handleClose = () => setOpen(false);
 
   return (
     <Container>
@@ -28,6 +34,7 @@ export const ProductCard = ({ productData, favoritePostLoading, showActions = fa
       <InfoContainer>
         <PriceContainer>
           <Price>$ {price.toLocaleString("es")}</Price>
+          {showComments && <Button onClick={showComments} endIcon={<ReviewsIcon />} sx={{ width: 'fit-content' }} variant="outlined">Opiniones</Button>}
           {showActions && <ActionsContainer>
             <Button variant="outlined" endIcon={<FavoriteIcon />} disabled={favoritePostLoading} onClick={handleAddToFavorite}>
               Agregar
@@ -42,5 +49,5 @@ export const ProductCard = ({ productData, favoritePostLoading, showActions = fa
       </InfoContainer>
       <AddProduct open={open} productData={productData} handleClose={handleClose} />
     </Container>
-  )
+  );
 };
