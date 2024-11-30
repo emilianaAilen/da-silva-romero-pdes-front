@@ -4,19 +4,22 @@ import { ProductCard } from "../../../common/components/ProductCard";
 import { ProductData } from "../../../products/types"
 import { Container } from "./purchases.styles";
 import { Purchase } from "../../types";
-import { Rating, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useDialog } from "../../../common/hooks/useDialog";
-import { PurchaseComments } from "../PurchaseComments";
+import { AddComment } from "../AddComment";
 import { useState } from "react";
+import { ProductComments } from "../../../common/components/ProductComments";
 
 interface FavoritesProps {
   purchases: Purchase[];
+  isUser: boolean;
   loading: boolean;
   hasError: boolean;
 }
 
-export const Purchases = ({ purchases, loading, hasError }: FavoritesProps) => {
-  const [selectedId, setSelectedId] = useState('');
+export const Purchases = ({ purchases, loading, hasError, isUser }: FavoritesProps) => {
+  const [productId, setProductId] = useState<string | null>(null);
+  const [purchaseId, setPurchaseId] = useState<string | null>(null);
   const { open, handleClose, handleOpen } = useDialog();
 
   const parseToCardData = ({ id, price_buyed, total_buyed, product }: Purchase): ProductData => (
@@ -29,12 +32,14 @@ export const Purchases = ({ purchases, loading, hasError }: FavoritesProps) => {
   );
 
   const onClose = () => {
-    setSelectedId('');
+    setProductId(null);
+    setPurchaseId(null);
     handleClose();
   }
 
-  const handleShowComments = (id: string) => () => {
-    setSelectedId(id);
+  const handleShowComments = (purchase: Purchase) => () => {
+    setProductId(purchase.product.id);
+    setPurchaseId(purchase.id);
     handleOpen();
   }
 
@@ -50,18 +55,19 @@ export const Purchases = ({ purchases, loading, hasError }: FavoritesProps) => {
           <ProductCard
             productData={parseToCardData(purchase)}
             key={purchase.id}
-            showComments={handleShowComments(purchase.id)}
+            showComments={handleShowComments(purchase)}
             summary={
               <Stack>
                 <Typography>Cantidad: {purchase.total_buyed}</Typography>
                 <Typography>Precio x unidad: {purchase.price_buyed}</Typography>
-                <Rating name="puntage" value={purchase.puntage} readOnly />
               </Stack>
             }
           />
         )}
       </ItemsWrapper>
-      <PurchaseComments open={open} id={selectedId} handleClose={onClose} />
+      <ProductComments open={open} id={productId} handleClose={onClose}>
+        {isUser && <AddComment purchaseId={purchaseId} productId={productId} />}
+      </ProductComments>
     </Container>
   );
 };
