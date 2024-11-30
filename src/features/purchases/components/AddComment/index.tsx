@@ -1,28 +1,24 @@
-import { useEffect, useState } from 'react';
-import { PurchaseComments as PurchaseCommentsUI } from './purchaseComments';
+import { useState } from 'react';
+import { AddComment as AddCommentUI } from './addComment';
 import useSWRMutation from 'swr/mutation';
 import { API } from '../../../../api';
 import { poster } from '../../../common/utils';
 import { useDispatch } from 'react-redux';
 import { showSnackbar } from '../../../common/slices/snackbarSlice';
+import { useSWRConfig } from 'swr';
 
-interface PurchaseCommentsProps {
-  open: boolean;
-  id: string;
-  handleClose: () => void;
+interface AddCommentProps {
+  purchaseId: string | null;
+  productId: string | null;
 }
 
-export const PurchaseComments = ({ open, id, handleClose }: PurchaseCommentsProps) => {
+export const AddComment = ({ purchaseId, productId }: AddCommentProps) => {
   const [puntage, setPuntage] = useState(0);
   const [comment, setComment] = useState('');
   const dispatch = useDispatch();
-   
-  useEffect(() => {
-    setPuntage(0);
-    setComment('');
-  }, [open]);
 
-  const { trigger, isMutating } = useSWRMutation(API.addComment(id), poster);
+  const { trigger, isMutating } = useSWRMutation(purchaseId ? API.addComment(purchaseId) : null, poster);
+  const { mutate } = useSWRConfig();
 
   const handleComment = async () => {
     try {
@@ -31,21 +27,21 @@ export const PurchaseComments = ({ open, id, handleClose }: PurchaseCommentsProp
         likes: puntage
       } as any);
       dispatch(showSnackbar({ type: 'success', message: 'Comentario agregado' }));
-      handleClose();
+      productId && mutate(API.getComments(productId));
+      setPuntage(0);
+      setComment('');
     } catch (error) {
       dispatch(showSnackbar({ type: 'error', message: 'No se pudo agregar el comentario' }));
     }
   };
 
   return (
-    <PurchaseCommentsUI
-      open={open}
+    <AddCommentUI
       puntage={puntage}
       comment={comment}
       loading={isMutating}
       setComment={setComment}
       setPuntage={setPuntage}
-      handleClose={handleClose}
       handleComment={handleComment}
     />
   );

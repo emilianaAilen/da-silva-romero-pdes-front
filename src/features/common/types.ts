@@ -9,3 +9,11 @@ export interface ProductSummary {
   external_item_id: string;
   url_image: string;
 }
+
+export interface ProductComment {
+  id: string;
+  username: string;
+  createdAt: string;
+  description: string;
+  likes: number;
+}
