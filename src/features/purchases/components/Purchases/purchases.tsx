@@ -4,7 +4,10 @@ import { ProductCard } from "../../../common/components/ProductCard";
 import { ProductData } from "../../../products/types"
 import { Container } from "./purchases.styles";
 import { Purchase } from "../../types";
-import { Stack, Typography } from "@mui/material";
+import { Rating, Stack, Typography } from "@mui/material";
+import { useDialog } from "../../../common/hooks/useDialog";
+import { PurchaseComments } from "../PurchaseComments";
+import { useState } from "react";
 
 interface FavoritesProps {
   purchases: Purchase[];
@@ -13,6 +16,9 @@ interface FavoritesProps {
 }
 
 export const Purchases = ({ purchases, loading, hasError }: FavoritesProps) => {
+  const [selectedId, setSelectedId] = useState('');
+  const { open, handleClose, handleOpen } = useDialog();
+
   const parseToCardData = ({ id, price_buyed, total_buyed, product }: Purchase): ProductData => (
     {
       id,
@@ -21,6 +27,16 @@ export const Purchases = ({ purchases, loading, hasError }: FavoritesProps) => {
       imageLink: product.url_image
     }
   );
+
+  const onClose = () => {
+    setSelectedId('');
+    handleClose();
+  }
+
+  const handleShowComments = (id: string) => () => {
+    setSelectedId(id);
+    handleOpen();
+  }
 
   return (
     <Container>
@@ -34,15 +50,18 @@ export const Purchases = ({ purchases, loading, hasError }: FavoritesProps) => {
           <ProductCard
             productData={parseToCardData(purchase)}
             key={purchase.id}
+            showComments={handleShowComments(purchase.id)}
             summary={
               <Stack>
                 <Typography>Cantidad: {purchase.total_buyed}</Typography>
                 <Typography>Precio x unidad: {purchase.price_buyed}</Typography>
+                <Rating name="puntage" value={purchase.puntage} readOnly />
               </Stack>
             }
           />
         )}
       </ItemsWrapper>
+      <PurchaseComments open={open} id={selectedId} handleClose={onClose} />
     </Container>
   );
 };
