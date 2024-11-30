@@ -5,5 +5,5 @@ export const Container = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  width: '60%',
+  width: '100%'
 }));

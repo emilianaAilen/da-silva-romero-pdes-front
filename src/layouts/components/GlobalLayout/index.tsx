@@ -29,6 +29,7 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   useEffect(() => {
     if (data) {
       localStorage.setItem('id', data.id);
+      localStorage.setItem('role', data.roleType);
     }
   }, [data]);
 
