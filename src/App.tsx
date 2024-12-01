@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { Register } from "./features/auth/components/Register";
 import { store } from "./store";
 import { GlobalLayout } from "./layouts/components/GlobalLayout";
-import { Favorites } from "./features/favorites/components/Favorites";
+import { Favorites } from "./features/favorites";
 import { Purchases } from "./features/purchases/components/Purchases";
 
 const App = () => (
