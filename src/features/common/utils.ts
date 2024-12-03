@@ -14,10 +14,10 @@ export const fetcher = async (url: string) => {
   }
 };
 
-export const poster = async (url: string, payload?: { arg: any }) => {
+export const poster = async (url: string, payload?: { arg: any }, method: string = 'POST') => {
   try {
     const res = await fetch(url, {
-      method: 'POST',
+      method,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -36,6 +36,8 @@ export const poster = async (url: string, payload?: { arg: any }) => {
   }
 };
 
+export const deleter = (url: string) => poster(url, undefined, 'DELETE');
+
 export const parseToProductData = ({ id, name, price, url_image }: ProductSummary): ProductData => (
   {
     id,
@@ -44,3 +46,8 @@ export const parseToProductData = ({ id, name, price, url_image }: ProductSummar
     imageLink: url_image
   }
 );
+
+export const getLocalDate = (date: string) => {
+  const dateObj = new Date(date);
+  return dateObj.toLocaleDateString();
+}
