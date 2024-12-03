@@ -7,14 +7,18 @@ import { ProductSummary } from "../../../common/types";
 import { ProductComments } from "../../../common/components/ProductComments";
 import { useState } from "react";
 import { useDialog } from "../../../common/hooks/useDialog";
+import { UserFavorites } from "../../types";
+import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface FavoritesProps {
-  favoritesProducts: ProductSummary[];
+  favorites: ProductSummary[] | UserFavorites[];
   loading: boolean;
   hasError: boolean;
+  isAdmin: boolean;
 }
 
-export const Favorites = ({ favoritesProducts, loading, hasError }: FavoritesProps) => {
+export const Favorites = ({ favorites, loading, hasError, isAdmin }: FavoritesProps) => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { open, handleClose, handleOpen } = useDialog();
 
@@ -31,20 +35,39 @@ export const Favorites = ({ favoritesProducts, loading, hasError }: FavoritesPro
     }
   );
 
+  const favoriteProductsList = (favoriteProducts: ProductSummary[]) => favoriteProducts.map(product =>
+    <ProductCard
+      productData={parseToProductData(product)}
+      showComments={handleSelectProductId(product.id)}
+      key={product.id}
+    />
+  )
+
   return (
     <Container>
       <ItemsWrapper
         loading={loading}
-        isEmpty={isEmpty(favoritesProducts) && !loading && !hasError}
+        isEmpty={isEmpty(favorites) && !loading && !hasError}
         hasError={hasError}
         errorMessage="Error al intentar obtener favoritos"
         emptyMessage="No tenes favoritos guardados">
-        {favoritesProducts.map(product =>
-          <ProductCard
-            productData={parseToProductData(product)}
-            showComments={handleSelectProductId(product.id)}
-            key={product.id}
-          />
+        {isAdmin ? (
+          (favorites as UserFavorites[]).map((favorite) => (
+            <Accordion key={favorite.username}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                {favorite.username}
+              </AccordionSummary>
+              <AccordionDetails>
+                {favoriteProductsList(favorite.productResponse)}
+              </AccordionDetails>
+            </Accordion>
+          ))
+        ) : (
+          favoriteProductsList(favorites as ProductSummary[])
         )}
       </ItemsWrapper>
       <ProductComments open={open} handleClose={handleClose} id={selectedId} />
