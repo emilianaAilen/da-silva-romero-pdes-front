@@ -36,6 +36,28 @@ export const poster = async (url: string, payload?: { arg: any }) => {
   }
 };
 
+export const deleter = async (url: string, payload?: { arg: any }) => {
+  try {
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: payload ? JSON.stringify(payload.arg) : undefined,
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(JSON.stringify(error));
+    }
+
+    return res.body;
+  } catch (error: any) {
+    throw new Error(error.message || 'Delete failed');
+  }
+};
+
 export const parseToProductData = ({ id, name, price, url_image }: ProductSummary): ProductData => (
   {
     id,
@@ -44,3 +66,8 @@ export const parseToProductData = ({ id, name, price, url_image }: ProductSummar
     imageLink: url_image
   }
 );
+
+export const getLocalDate = (date: string) => {
+  const dateObj = new Date(date);
+  return dateObj.toLocaleDateString();
+}

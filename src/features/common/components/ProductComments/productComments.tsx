@@ -4,6 +4,7 @@ import { isEmpty } from "lodash";
 import { ProductComment } from "../../types";
 import { ItemsWrapper } from "../ItemsWrapper";
 import { ReactNode } from "react";
+import { getLocalDate } from "../../utils";
 
 interface ProductCommentsProps {
   open: boolean;
@@ -21,62 +22,55 @@ export const ProductComments = ({
   comments,
   children,
   handleClose,
-}: ProductCommentsProps) => {
-  const getLocalDate = (date: string) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString();
-  }
-
-  return (
-    <Dialog
-      PaperProps={{
-        sx: {
-          width: '600px',
-          minHeight: '500px',
-          maxHeight: '800px',
-          backgroundImage: 'none',
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-    >
-      <Stack width="100%" py={2} px={2} alignItems="flex-end">
-        <IconButton disabled={loading} aria-label="close" size="small" onClick={handleClose}>
-          <CloseIcon />
-        </IconButton>
-      </Stack>
-      <DialogContent dividers>
-        <ItemsWrapper
-          loading={loading}
-          isEmpty={!hasError && !loading && isEmpty(comments)}
-          hasError={hasError}
-          emptyMessage="No hay comentarios"
-          errorMessage="Error al tratar de obtener comentarios"
-        >
-          <Stack width="100%" gap={2} maxHeight="350px" overflow="auto" marginBottom={2}>
-            {comments.map(comment => (
-              <Card sx={{ width: '100%', overflow: 'unset' }} key={comment.id}>
-                <CardHeader
-                  avatar={
-                    <Avatar>
-                      {comment.username[0]}
-                    </Avatar>
-                  }
-                  title={comment.username}
-                  subheader={getLocalDate(comment.createdAt)}
-                />
-                <CardContent>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    {comment.description}
-                  </Typography>
-                  <Rating name="likes" value={comment.likes} readOnly />
-                </CardContent>
-              </Card>
-            ))}
-          </Stack>
-        </ItemsWrapper>
-        {children}
-      </DialogContent>
-    </Dialog>
-  );
-};
+}: ProductCommentsProps) => (
+  <Dialog
+    PaperProps={{
+      sx: {
+        width: '600px',
+        minHeight: '500px',
+        maxHeight: '800px',
+        backgroundImage: 'none',
+      },
+    }}
+    open={open}
+    onClose={handleClose}
+  >
+    <Stack width="100%" py={2} px={2} alignItems="flex-end">
+      <IconButton disabled={loading} aria-label="close" size="small" onClick={handleClose}>
+        <CloseIcon />
+      </IconButton>
+    </Stack>
+    <DialogContent dividers>
+      <ItemsWrapper
+        loading={loading}
+        isEmpty={!hasError && !loading && isEmpty(comments)}
+        hasError={hasError}
+        emptyMessage="No hay comentarios"
+        errorMessage="Error al tratar de obtener comentarios"
+      >
+        <Stack width="100%" gap={2} maxHeight="350px" overflow="auto" marginBottom={2}>
+          {comments.map(comment => (
+            <Card sx={{ width: '100%', overflow: 'unset' }} key={comment.id}>
+              <CardHeader
+                avatar={
+                  <Avatar>
+                    {comment.username[0]}
+                  </Avatar>
+                }
+                title={comment.username}
+                subheader={getLocalDate(comment.createdAt)}
+              />
+              <CardContent>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                  {comment.description}
+                </Typography>
+                <Rating name="likes" value={comment.likes} readOnly />
+              </CardContent>
+            </Card>
+          ))}
+        </Stack>
+      </ItemsWrapper>
+      {children}
+    </DialogContent>
+  </Dialog>
+);
