@@ -3,15 +3,16 @@ import { ItemsWrapper } from "../../../common/components/ItemsWrapper";
 import { ProductCard } from "../../../common/components/ProductCard";
 import { ProductData } from "../../../products/types"
 import { Container } from "./purchases.styles";
-import { Purchase } from "../../types";
-import { Stack, Typography } from "@mui/material";
+import { Purchase, UserPurchases } from "../../types";
+import { Accordion, AccordionDetails, AccordionSummary, Stack, Typography } from "@mui/material";
 import { useDialog } from "../../../common/hooks/useDialog";
 import { AddComment } from "../AddComment";
 import { useState } from "react";
 import { ProductComments } from "../../../common/components/ProductComments";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface FavoritesProps {
-  purchases: Purchase[];
+  purchases: Purchase[] | UserPurchases[];
   isUser: boolean;
   loading: boolean;
   hasError: boolean;
@@ -43,6 +44,20 @@ export const Purchases = ({ purchases, loading, hasError, isUser }: FavoritesPro
     handleOpen();
   }
 
+  const purchasesList = (purchases: Purchase[]) => purchases.map(purchase =>
+    <ProductCard
+      productData={parseToCardData(purchase)}
+      key={purchase.id}
+      showComments={handleShowComments(purchase)}
+      summary={
+        <Stack>
+          <Typography>Cantidad: {purchase.total_buyed}</Typography>
+          <Typography>Precio x unidad: {purchase.price_buyed}</Typography>
+        </Stack>
+      }
+    />
+  );
+
   return (
     <Container>
       <ItemsWrapper
@@ -51,18 +66,21 @@ export const Purchases = ({ purchases, loading, hasError, isUser }: FavoritesPro
         hasError={hasError}
         errorMessage="Error al intentar obtener favoritos"
         emptyMessage="No tenes favoritos guardados">
-        {purchases.map(purchase =>
-          <ProductCard
-            productData={parseToCardData(purchase)}
-            key={purchase.id}
-            showComments={handleShowComments(purchase)}
-            summary={
-              <Stack>
-                <Typography>Cantidad: {purchase.total_buyed}</Typography>
-                <Typography>Precio x unidad: {purchase.price_buyed}</Typography>
-              </Stack>
-            }
-          />
+        {isUser ? purchasesList(purchases as Purchase[]) : (
+          (purchases as UserPurchases[]).map((purchase) => (
+            <Accordion key={purchase.username}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                {purchase.username}
+              </AccordionSummary>
+              <AccordionDetails>
+                {purchasesList(purchase.productPurchase)}
+              </AccordionDetails>
+            </Accordion>
+          ))
         )}
       </ItemsWrapper>
       <ProductComments open={open} id={productId} handleClose={onClose}>
