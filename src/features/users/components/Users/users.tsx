@@ -17,6 +17,7 @@ interface UsersProps {
 export const Users = ({ users, loading, hasError }: UsersProps) => {
   const [email, setEmail] = useState<string | undefined>(undefined)
   const { open, handleOpen, handleClose } = useDialog();
+  const userID = localStorage.getItem('id');
 
   const onSelectUser = (email: string) => {
     setEmail(email);
@@ -31,7 +32,7 @@ export const Users = ({ users, loading, hasError }: UsersProps) => {
     errorMessage="Error al intentar buscar usuarios"
   >
     <Stack gap={2}>
-      {users.map(user => (
+      {users.filter(user => user.id !== userID).map(user => (
         <Card key={user.id}>
           <CardHeader
             avatar={
