@@ -13,6 +13,8 @@ export const API = {
   addComment: (purchaseID: string) => `${baseUrl}/purchase/comment/${purchaseID}`,
   admin: {
     getFavorites: `${baseUrl}/products/favorites/admin`,
-    getPurchases: `${baseUrl}/purchase/admin`
+    getPurchases: `${baseUrl}/purchase/admin`,
+    getTopPurchases: `${baseUrl}/purchase/admin/top`,
+    getTopFavorites: `${baseUrl}/products/favorites/admin/top`,
   }
 };

@@ -1,3 +1,6 @@
+import { ProductData } from "../products/types";
+import { ProductSummary } from "./types";
+
 export const fetcher = async (url: string) => {
   try {
     const res = await fetch(url, { credentials: 'include' });
@@ -32,3 +35,12 @@ export const poster = async (url: string, payload?: { arg: any }) => {
     throw new Error(error.message || 'Post failed');
   }
 };
+
+export const parseToProductData = ({ id, name, price, url_image }: ProductSummary): ProductData => (
+  {
+    id,
+    tittle: name,
+    price: Number(price),
+    imageLink: url_image
+  }
+);
