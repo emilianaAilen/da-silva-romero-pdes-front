@@ -8,3 +8,8 @@ export interface Purchase {
   total_buyed: number;
   product: ProductSummary;
 }
+
+export interface UserPurchases {
+  username: string;
+  productPurchase: Purchase[];
+}
