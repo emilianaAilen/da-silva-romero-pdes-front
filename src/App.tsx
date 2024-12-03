@@ -11,6 +11,7 @@ import { store } from "./store";
 import { GlobalLayout } from "./layouts/components/GlobalLayout";
 import { Favorites } from "./features/favorites/components/Favorites";
 import { Purchases } from "./features/purchases/components/Purchases";
+import { ProductsReport } from "./features/reports/components/ProductsReport";
 
 const App = () => (
   <Provider store={store}>
@@ -29,7 +30,7 @@ const App = () => (
           path="/purchases"
           element={
             <ProtectedRoute>
-              <Purchases/>
+              <Purchases />
             </ProtectedRoute>
           }
         />
@@ -37,7 +38,23 @@ const App = () => (
           path="/favorites"
           element={
             <ProtectedRoute>
-              <Favorites/>
+              <Favorites />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports/purchases"
+          element={
+            <ProtectedRoute>
+              <ProductsReport isTopPurchases/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports/favorites"
+          element={
+            <ProtectedRoute>
+              <ProductsReport />
             </ProtectedRoute>
           }
         />
