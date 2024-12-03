@@ -64,8 +64,8 @@ export const Purchases = ({ purchases, loading, hasError, isUser }: FavoritesPro
         loading={loading}
         isEmpty={isEmpty(purchases) && !loading && !hasError}
         hasError={hasError}
-        errorMessage="Error al intentar obtener favoritos"
-        emptyMessage="No tenes favoritos guardados">
+        errorMessage="Error al intentar obtener compras"
+        emptyMessage="No hay compras registradas">
         {isUser ? purchasesList(purchases as Purchase[]) : (
           (purchases as UserPurchases[]).map((purchase) => (
             <Accordion key={purchase.username}>

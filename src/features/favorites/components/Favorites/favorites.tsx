@@ -2,7 +2,6 @@ import { isEmpty } from "lodash";
 import { ItemsWrapper } from "../../../common/components/ItemsWrapper";
 import { ProductCard } from "../../../common/components/ProductCard";
 import { Container } from "./favorites.styles";
-import { ProductData } from "../../../products/types";
 import { ProductSummary } from "../../../common/types";
 import { ProductComments } from "../../../common/components/ProductComments";
 import { useState } from "react";
@@ -10,6 +9,7 @@ import { useDialog } from "../../../common/hooks/useDialog";
 import { UserFavorites } from "../../types";
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { parseToProductData } from "../../../common/utils";
 
 interface FavoritesProps {
   favorites: ProductSummary[] | UserFavorites[];
@@ -26,14 +26,6 @@ export const Favorites = ({ favorites, loading, hasError, isAdmin }: FavoritesPr
     setSelectedId(id);
     handleOpen();
   }
-  const parseToProductData = ({ id, name, price, url_image }: ProductSummary): ProductData => (
-    {
-      id,
-      tittle: name,
-      price: Number(price),
-      imageLink: url_image
-    }
-  );
 
   const favoriteProductsList = (favoriteProducts: ProductSummary[]) => favoriteProducts.map(product =>
     <ProductCard
@@ -50,7 +42,7 @@ export const Favorites = ({ favorites, loading, hasError, isAdmin }: FavoritesPr
         isEmpty={isEmpty(favorites) && !loading && !hasError}
         hasError={hasError}
         errorMessage="Error al intentar obtener favoritos"
-        emptyMessage="No tenes favoritos guardados">
+        emptyMessage="No hay favoritos guardados">
         {isAdmin ? (
           (favorites as UserFavorites[]).map((favorite) => (
             <Accordion key={favorite.username}>
