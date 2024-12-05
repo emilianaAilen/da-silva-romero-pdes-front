@@ -44,7 +44,9 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   const authentication = {
     signIn: () => null,
     signOut: () => {
-      removeCookie('authToken', { path: '/' })
+      removeCookie('authToken', { path: '/' });
+      localStorage.removeItem('role');
+      localStorage.removeItem('id');
     },
   }
 

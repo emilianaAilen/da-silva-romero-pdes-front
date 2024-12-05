@@ -66,22 +66,24 @@ export const Purchases = ({ purchases, loading, hasError, isUser }: FavoritesPro
         hasError={hasError}
         errorMessage="Error al intentar obtener compras"
         emptyMessage="No hay compras registradas">
-        {isUser ? purchasesList(purchases as Purchase[]) : (
-          (purchases as UserPurchases[]).map((purchase) => (
-            <Accordion key={purchase.username}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header"
-              >
-                {purchase.username}
-              </AccordionSummary>
-              <AccordionDetails>
-                {purchasesList(purchase.productPurchase)}
-              </AccordionDetails>
-            </Accordion>
-          ))
-        )}
+        <Stack gap={2}>
+          {isUser ? purchasesList(purchases as Purchase[]) : (
+            (purchases as UserPurchases[]).map((purchase) => (
+              <Accordion key={purchase.username}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1-content"
+                  id="panel1-header"
+                >
+                  {purchase.username}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {purchasesList(purchase.productPurchase)}
+                </AccordionDetails>
+              </Accordion>
+            ))
+          )}
+        </Stack>
       </ItemsWrapper>
       <ProductComments open={open} id={productId} handleClose={onClose}>
         {isUser && <AddComment purchaseId={purchaseId} productId={productId} />}
