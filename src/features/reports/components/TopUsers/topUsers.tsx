@@ -20,7 +20,7 @@ export const TopUsers = ({ users, loading, hasError }: TopUsersProps) => (
   >
     <Stack gap={2}>
       {users.map(user => (
-        <UserCard user={user} key={user.id} />
+        <UserCard showCantPurchases user={user} key={user.id} />
       ))}
     </Stack>
   </ItemsWrapper>

@@ -6,10 +6,11 @@ import { TopUser } from "../../../reports/types";
 
 interface UserCardProps {
   user: User | TopUser,
+  showCantPurchases?: boolean;
   deleteUser?: (email: string) => void;
 }
 
-export const UserCard = ({ user, deleteUser }: UserCardProps) => (
+export const UserCard = ({ user, showCantPurchases = false, deleteUser }: UserCardProps) => (
   <Card>
     <CardHeader
       avatar={
@@ -31,7 +32,7 @@ export const UserCard = ({ user, deleteUser }: UserCardProps) => (
       <Typography variant="body2" sx={{ color: 'text.secondary' }}>
         Fecha de creación: {getLocalDate(user.created_at)}
       </Typography>
-      {(user as TopUser).cantPurchasesProducts && (
+      {showCantPurchases && (
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           Compras Realizadas: {(user as TopUser).cantPurchasesProducts}
         </Typography>
