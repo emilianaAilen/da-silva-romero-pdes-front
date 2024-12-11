@@ -17,6 +17,7 @@ export const API = {
     getTopPurchases: `${baseUrl}/purchase/admin/top`,
     getTopFavorites: `${baseUrl}/products/favorites/admin/top`,
     getAllUsers: `${baseUrl}/user/admin/all`,
+    getTopUsers:`${baseUrl}/user/admin/top`,
     deleteUser: (email: string) => `${baseUrl}/user/admin/delete/${email}`,
   }
 };

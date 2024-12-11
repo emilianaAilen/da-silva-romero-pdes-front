@@ -12,6 +12,7 @@ import { Favorites } from "./features/favorites/components/Favorites";
 import { Purchases } from "./features/purchases/components/Purchases";
 import { ProductsReport } from "./features/reports/components/ProductsReport";
 import { Home } from "./features/home/components/Home";
+import { TopUsers } from "./features/reports/components/TopUsers";
 
 const App = () => (
   <Provider store={store}>
@@ -55,6 +56,14 @@ const App = () => (
           element={
             <ProtectedRoute>
               <ProductsReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports/users"
+          element={
+            <ProtectedRoute>
+              <TopUsers />
             </ProtectedRoute>
           }
         />
