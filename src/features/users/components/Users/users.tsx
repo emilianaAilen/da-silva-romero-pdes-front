@@ -1,12 +1,11 @@
 import { isEmpty } from "lodash";
 import { ItemsWrapper } from "../../../common/components/ItemsWrapper";
 import { User } from "../../types";
-import { Avatar, Card, CardContent, CardHeader, IconButton, Stack, Typography } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
-import { getLocalDate } from "../../../common/utils";
+import { Stack } from "@mui/material";
 import { DeleteUser } from "../DeleteUser";
 import { useDialog } from "../../../common/hooks/useDialog";
 import { useState } from "react";
+import { UserCard } from "../../../common/components/UserCard";
 
 interface UsersProps {
   users: User[];
@@ -24,38 +23,20 @@ export const Users = ({ users, loading, hasError }: UsersProps) => {
     handleOpen();
   }
 
-  return (<ItemsWrapper
-    loading={loading}
-    isEmpty={!loading && isEmpty(users) && !hasError}
-    hasError={!loading && hasError}
-    emptyMessage="No hay usuarios registrados"
-    errorMessage="Error al intentar buscar usuarios"
-  >
-    <Stack gap={2}>
-      {users.filter(user => user.id !== userID).map(user => (
-        <Card key={user.id}>
-          <CardHeader
-            avatar={
-              <Avatar aria-label="avatar">
-                {user.username[0] + user.username[1]}
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="delete" onClick={() => onSelectUser(user.email)}>
-                <DeleteIcon />
-              </IconButton>
-            }
-            title={user.username}
-            subheader={user.email}
-          />
-          <CardContent>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Fecha de creación: {getLocalDate(user.created_at)}
-            </Typography>
-          </CardContent>
-        </Card>
-      ))}
-    </Stack>
-    <DeleteUser open={open} email={email} handleClose={handleClose} />
-  </ItemsWrapper>)
+  return (
+    <ItemsWrapper
+      loading={loading}
+      isEmpty={!loading && isEmpty(users) && !hasError}
+      hasError={!loading && hasError}
+      emptyMessage="No hay usuarios registrados"
+      errorMessage="Error al intentar buscar usuarios"
+    >
+      <Stack gap={2}>
+        {users.filter(user => user.id !== userID).map(user => (
+          <UserCard user={user} deleteUser={onSelectUser} key={user.id} />
+        ))}
+      </Stack>
+      <DeleteUser open={open} email={email} handleClose={handleClose} />
+    </ItemsWrapper>
+  );
 };
