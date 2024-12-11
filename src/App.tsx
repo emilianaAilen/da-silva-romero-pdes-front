@@ -3,12 +3,16 @@ import { Route, Routes } from "react-router-dom";
 import { GlobalSnackbar } from "./features/common/components/GlobalSnackbar/globalSnackbar";
 import { HomeWrapper } from "./features/home/components/HomeWrapper";
 import { Login } from "./features/auth/components/Login";
-import { Products } from "./features/products/components/Products";
 import { ProtectedRoute } from "./features/auth/components/ProtectedRoute";
 import { Provider } from "react-redux";
 import { Register } from "./features/auth/components/Register";
 import { store } from "./store";
 import { GlobalLayout } from "./layouts/components/GlobalLayout";
+import { Favorites } from "./features/favorites/components/Favorites";
+import { Purchases } from "./features/purchases/components/Purchases";
+import { ProductsReport } from "./features/reports/components/ProductsReport";
+import { Home } from "./features/home/components/Home";
+import { TopUsers } from "./features/reports/components/TopUsers";
 
 const App = () => (
   <Provider store={store}>
@@ -19,7 +23,7 @@ const App = () => (
           path="/home"
           element={
             <ProtectedRoute>
-              <Products />
+              <Home />
             </ProtectedRoute>
           }
         />
@@ -27,7 +31,7 @@ const App = () => (
           path="/purchases"
           element={
             <ProtectedRoute>
-              <>Compras</>
+              <Purchases />
             </ProtectedRoute>
           }
         />
@@ -35,7 +39,31 @@ const App = () => (
           path="/favorites"
           element={
             <ProtectedRoute>
-              <>Favoritos</>
+              <Favorites />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports/purchases"
+          element={
+            <ProtectedRoute>
+              <ProductsReport isTopPurchases/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports/favorites"
+          element={
+            <ProtectedRoute>
+              <ProductsReport />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports/users"
+          element={
+            <ProtectedRoute>
+              <TopUsers />
             </ProtectedRoute>
           }
         />

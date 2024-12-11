@@ -24,7 +24,7 @@ export const InfoContainer = styled(Box)(() => ({
 
 export const PriceContainer = styled(Box)(() => ({
   display: 'flex',
-  gap: '10px',
+  justifyContent: 'space-between',
   alignItems: 'center'
 }));
 
@@ -35,4 +35,11 @@ export const Price = styled('p')(() => ({
 
 export const Title = styled('p')(() => ({
   fontSize: '18px'
+}));
+
+
+export const ActionsContainer = styled(Box)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px'
 }));
