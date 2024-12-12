@@ -1,6 +1,6 @@
 export enum UserRole {
   user = 'common',
-  admin = 'user'
+  admin = 'admin'
 }
 
 export interface UserBasicData {

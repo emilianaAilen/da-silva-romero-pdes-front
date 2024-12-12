@@ -16,7 +16,8 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
 
   const { data, isLoading } = useSWR(API.session, fetcher, {
     revalidateOnFocus: false,
-    shouldRetryOnError: false
+    shouldRetryOnError: false,
+    revalidateIfStale: false,
   });
 
   useEffect(() => {
@@ -25,18 +26,27 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
     }
   }, [cookies.authToken]);
 
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('id', data.id);
+      localStorage.setItem('role', data.roleType);
+    }
+  }, [data]);
+
   const session: Session = {
     user: {
-      name: data?.name,
+      name: data?.username,
       email: data?.email,
-      image: `https://ui-avatars.com/api/?name=${data?.name}`,
+      image: `https://ui-avatars.com/api/?name=${data?.username}`,
     }
   }
 
   const authentication = {
     signIn: () => null,
     signOut: () => {
-      removeCookie('authToken', { path: '/' })
+      removeCookie('authToken', { path: '/' });
+      localStorage.removeItem('role');
+      localStorage.removeItem('id');
     },
   }
 
@@ -54,5 +64,5 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
 
   if (!cookies.authToken) return <>{children}</>;
 
-  return <GlobalLayoutUI session={session} authentication={authentication} role={data?.role}>{children}</GlobalLayoutUI>
+  return <GlobalLayoutUI session={session} authentication={authentication} role={data?.roleType}>{children}</GlobalLayoutUI>
 }
