@@ -13,7 +13,7 @@ Podes usar yarn si preferis
 
 Abrir [http://localhost:3000](http://localhost:3000) para ver en el navegador.
 
-## Para correr tests de integración
+## Para correr tests e2e
 - Agregar el archivo cypress.env.json con valores reales para las keys en cypress.env.template
 - `npm run cy:open`
 - Seleccionar e2e.
