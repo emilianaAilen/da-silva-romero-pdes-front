@@ -45,16 +45,39 @@ describe('Integration test for Login/Register flow', () => {
       cy.get('.MuiAlert-message').should('contain.text', 'User Logged successfully');
       cy.url().should('include', '/home');
     });
-  
+
     it('should show menu for common user role', () => {
       cy.contains('¡Hola!');
       cy.contains('Home');
       cy.contains('Mis Compras');
       cy.contains('Mis Favoritos');
     });
+
+    it('should sign out current user if sign out button is clicked', () => {
+      cy.get('button[aria-label="Current User"]').click();
+      cy.contains('Sign Out').click();
+      cy.url().should('include', '/login');
+    });
   });
 
-  after(() => {
-    cy.request('DELETE',  `${Cypress.env('apiBaseUrl')}/user/delete/test@example.com`);
+  describe('delete test user with admin', () => {
+    beforeEach(() => {
+      cy.get('input[name="email"]').type('admin@admin.com');
+      cy.get('input[name="password"]').type('Admin123');
+      cy.get('button[type="submit"]').click();
+    });
+
+    it('admin profile should be visible', () => {
+      cy.contains('Home');
+      cy.contains('Productos comprados');
+      cy.contains('Productos guardados');
+      cy.contains('Reportes');
+    });
+
+    it('should delete created test user', () => {
+      cy.get('[data-testid="delete-test@example.com"]').click();
+      cy.contains('Borrar').click();
+      cy.get('.MuiAlert-message').should('contain.text', 'Usuario borrado');
+    });
   });
 });

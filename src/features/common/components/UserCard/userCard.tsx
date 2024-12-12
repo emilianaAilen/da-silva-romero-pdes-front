@@ -20,7 +20,7 @@ export const UserCard = ({ user, showCantPurchases = false, deleteUser }: UserCa
       }
       action={
         deleteUser && (
-          <IconButton aria-label="delete" onClick={() => deleteUser(user.email)}>
+          <IconButton aria-label="delete" data-testid={`delete-${user.email}`} onClick={() => deleteUser(user.email)}>
             <DeleteIcon />
           </IconButton>
         )
