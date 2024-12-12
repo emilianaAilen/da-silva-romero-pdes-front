@@ -4,7 +4,7 @@ import { User } from "../../types";
 import { Stack } from "@mui/material";
 import { DeleteUser } from "../DeleteUser";
 import { useDialog } from "../../../common/hooks/useDialog";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { UserCard } from "../../../common/components/UserCard";
 
 interface UsersProps {
@@ -17,6 +17,10 @@ export const Users = ({ users, loading, hasError }: UsersProps) => {
   const [email, setEmail] = useState<string | undefined>(undefined)
   const { open, handleOpen, handleClose } = useDialog();
   const userID = localStorage.getItem('id');
+
+  const usersToShow = useMemo(() => {
+    return users.filter(user => user.id !== userID);
+  }, [users, userID]);
 
   const onSelectUser = (email: string) => {
     setEmail(email);
@@ -32,7 +36,7 @@ export const Users = ({ users, loading, hasError }: UsersProps) => {
       errorMessage="Error al intentar buscar usuarios"
     >
       <Stack gap={2}>
-        {users.filter(user => user.id !== userID).map(user => (
+        {usersToShow.map(user => (
           <UserCard user={user} deleteUser={onSelectUser} key={user.id} />
         ))}
       </Stack>
