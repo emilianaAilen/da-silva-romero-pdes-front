@@ -35,7 +35,7 @@ export const Users = ({ users, loading, hasError }: UsersProps) => {
       emptyMessage="No hay usuarios registrados"
       errorMessage="Error al intentar buscar usuarios"
     >
-      <Stack gap={2}>
+      <Stack flexWrap="wrap" flexDirection="row" gap={2} p={2}>
         {usersToShow.map(user => (
           <UserCard user={user} deleteUser={onSelectUser} key={user.id} />
         ))}
