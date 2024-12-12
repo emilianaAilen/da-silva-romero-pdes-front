@@ -5,11 +5,10 @@ import { fetcher } from '../../../common/utils';
 import { UserRole } from '../../../auth/services/types';
 
 export const Purchases = () => {
-  const userID = localStorage.getItem('id');
   const role = localStorage.getItem('role');
   const isUser = role === UserRole.user;
 
-  const { data, error, isLoading } = useSWR(isUser ? API.getPurchases(userID!) : API.admin.getPurchases, fetcher, {
+  const { data, error, isLoading } = useSWR(isUser ? API.getPurchases : API.admin.getPurchases, fetcher, {
     revalidateOnFocus: false,
     shouldRetryOnError: false
   });
