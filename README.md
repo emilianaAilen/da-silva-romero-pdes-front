@@ -13,5 +13,8 @@ Podes usar yarn si preferis
 
 Abrir [http://localhost:3000](http://localhost:3000) para ver en el navegador.
 
-## Para correr tests
-- `npm test`
+## Para correr tests de cypress
+- `npm run cy:open`
+- Elegir e2e tests.
+- Elegir browser.
+- Seleccionar script.
