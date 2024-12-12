@@ -62,8 +62,10 @@ describe('Integration test for Login/Register flow', () => {
 
   describe('delete test user with admin', () => {
     beforeEach(() => {
-      cy.get('input[name="email"]').type('admin@admin.com');
-      cy.get('input[name="password"]').type('Admin123');
+      const email = Cypress.env('adminEmail');
+      const password = Cypress.env('adminPassword');
+      cy.get('input[name="email"]').type(email);
+      cy.get('input[name="password"]').type(password);
       cy.get('button[type="submit"]').click();
     });
 
