@@ -3,11 +3,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import DescriptionIcon from '@mui/icons-material/Description';
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import { AppProvider, Authentication, Navigation, Session } from '@toolpad/core/AppProvider';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { AppProvider, Authentication, Navigation, Router, Session } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import logoMl from '../../../assets/Logo_ML.png';
 import { UserRole } from "../../../features/auth/services/types";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const USER_NAVIGATION: Navigation = [
   {
@@ -92,15 +93,27 @@ interface GlobalLayoutProps {
   role: string;
 }
 
-export const GlobalLayout = ({ children, session, authentication, role }: GlobalLayoutProps) => (
-  <AppProvider
-    branding={{ title: 'Asesor Personal de Compras', logo: <img style={{ maxHeight: '30px' }} src={logoMl} alt="logo" /> }}
-    session={session}
-    authentication={authentication}
-    navigation={role === UserRole.user ? USER_NAVIGATION : ADMIN_NAVIGATION}
-  >
-    <DashboardLayout>
-      {children}
-    </DashboardLayout>
-  </AppProvider>
-);
+export const GlobalLayout = ({ children, session, authentication, role }: GlobalLayoutProps) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const router = {
+    pathname: location.pathname,
+    searchParams: new URLSearchParams(location.search),
+    navigate
+  };
+
+  return (
+    <AppProvider
+      branding={{ title: 'Asesor Personal de Compras', logo: <img style={{ maxHeight: '30px' }} src={logoMl} alt="logo" /> }}
+      session={session}
+      authentication={authentication}
+      navigation={role === UserRole.user ? USER_NAVIGATION : ADMIN_NAVIGATION}
+      router={router as Router}
+    >
+      <DashboardLayout>
+        {children}
+      </DashboardLayout>
+    </AppProvider>
+  )
+};

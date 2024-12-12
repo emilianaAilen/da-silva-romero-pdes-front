@@ -16,7 +16,8 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
 
   const { data, isLoading } = useSWR(API.session, fetcher, {
     revalidateOnFocus: false,
-    shouldRetryOnError: false
+    shouldRetryOnError: false,
+    revalidateIfStale: false,
   });
 
   useEffect(() => {
@@ -24,6 +25,13 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
       mutate(API.session);
     }
   }, [cookies.authToken]);
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('id', data.id);
+      localStorage.setItem('role', data.roleType);
+    }
+  }, [data]);
 
   const session: Session = {
     user: {
@@ -36,7 +44,9 @@ export const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   const authentication = {
     signIn: () => null,
     signOut: () => {
-      removeCookie('authToken', { path: '/' })
+      removeCookie('authToken', { path: '/' });
+      localStorage.removeItem('role');
+      localStorage.removeItem('id');
     },
   }
 
