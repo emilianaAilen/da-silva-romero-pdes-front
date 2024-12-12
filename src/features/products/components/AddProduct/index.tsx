@@ -21,9 +21,7 @@ export const AddProduct = ({ open, productData, handleClose }: AddProductProps) 
 
   const handleBuy = async () => {
     try {
-      const userID = localStorage.getItem('id');
       await trigger({
-        userID,
         productID: productData.id,
         cantStockBuyed: cant,
         priceBuyed: productData.price,
